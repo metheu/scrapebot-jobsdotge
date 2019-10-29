@@ -130,7 +130,7 @@ def main():
         vacanvy_query_from_db = list(query)
 
         for i in vacanvy_query_from_db:
-            if send_fake_notification(i.vacancy_title, i.rating):
+            if send_notification(i.vacancy_title, i.rating):
                 update_empty = Vacancy.update(notification_sent=time.time()).where(
                     Vacancy.vacancy_list_id == i.vacancy_list_id
                 )
@@ -142,14 +142,9 @@ def main():
                 logging.error("Error snding notification")
 
 
-if __name__ == "__main__":
+schedule.every(1).minutes.do(main)
+
+while True:
     logging.basicConfig(level=logging.DEBUG)
-    main()
-
-
-#    schedule.every(10).minutes.do(main)
-
-#    while True:
-#        logging.basicConfig(level=logging.DEBUG)
-#        schedule.run_pending()
-#        time.sleep(1)
+    schedule.run_pending()
+    time.sleep(1)
