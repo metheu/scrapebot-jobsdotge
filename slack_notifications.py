@@ -1,6 +1,9 @@
-import requests
-import json
-import logging
+import requests, json, logging, os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+slack_hook = os.getenv("SLACK_HOOK_URL")
 
 
 def send_block_notification(number_of_new_vacancies, payload):
@@ -42,8 +45,11 @@ def send_notification(vacancy_title, vacancy_rating):
             "attachments": [
                 {
                     "pretext": "New vacancies posted! :innocent: :ghost: :man-cartwheeling:",
-                    "title":  "New vancancy have been posted!",
-                    "text": "Vacancy title: " + vacancy_title + " with rating: " + vacancy_rating,
+                    "title": "New vancancy have been posted!",
+                    "text": "Vacancy title: "
+                    + vacancy_title
+                    + " with rating: "
+                    + str(vacancy_rating),
                     "color": "#7CD197",
                 }
             ]
@@ -62,8 +68,8 @@ def send_notification(vacancy_title, vacancy_rating):
         return False
     else:
         return True
-    
-    
+
+
 def send_fake_notification(vacancy_title, vacancy_rating):
     logging.info("Sending notification " + vacancy_title + " " + str(vacancy_rating))
 
