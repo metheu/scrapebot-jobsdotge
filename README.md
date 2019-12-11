@@ -8,7 +8,13 @@
 ## Install
 
 ```sh
-npm install
+python -m venv venv && pip install -r requirments.txt
+```
+
+## Run
+
+```sh
+touch .env, enter slack hook and python scrape.py
 ```
 
 ## Author
